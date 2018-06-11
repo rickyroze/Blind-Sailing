@@ -1,0 +1,198 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc} % you don't need to understand this
+
+% below are a bunch of useful packages, it doesn't cost anything to include them all so you might as well
+\usepackage{amsmath}		% lets you input equations in math mode
+\usepackage{graphicx}		% lets you include images
+\usepackage{titling}		% lets you customize the document header
+\usepackage{titlesec}		% lets you customize section titles
+\usepackage{enumerate}		% lets you make lists
+\usepackage{hyperref}		% lets you make links
+\usepackage{subcaption}     % if you want to use subcaptions
+\usepackage[all]{hypcap}	% makes links refer to figures and not captions
+\usepackage{relsize}		% lets you use relative font sizes
+\usepackage{caption}        % lets you add captions
+\usepackage{array}          % lets you specify table column widths
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry} % I'll bet you can figure this one out
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{epstopdf}
+\usepackage{blindtext}
+\usepackage{enumitem}
+\usepackage{bbding}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{textcomp}
+
+% this line starts the actual document and text
+\begin{document}
+
+\title{\textbf{Olin Blind Match Racing System for Sailing \\ Alpha Test Version \\ User Manual}}
+\author{Yichen Jiang & yichen.jiang@students.olin.edu \and Alexander Morrow & alex.morrow@olin.edu \and Rowan Sharman & rowan.sharman@students.olin.edu \and Onur Talu & onur.talu@students.olin.edu}
+\date{August 2017} % leave this commented to display the current date
+\maketitle % don't forget to include this line or you won't have a document header
+\tableofcontents
+\pagebreak 
+
+\section{Introduction}
+
+This is a user manual for the Olin Blind Match Racing System. The system is intended to ne a manufacture that has been in development since June 2013 in Olin College of Engineering in Needham, MA, in collaboration with Community Boating Inc.(CBI) in Boston, MA.
+
+The first prototype of this experimental system, which hasn't been approved to be used in official regattas yet, is handed out to Universal Sailing Program at CBI, in August, 2017.
+
+\section{Physical Components}
+
+Each system comes with two kits for the two boats. These kits contain a cabin computer, a keypad kit and an in-ear earpiece.
+
+\subsection{Cabin Computer}
+
+The cabin computer is the most essential part of the kit that contains a Raspberry Pi3 (which is actually the computer of the system), a Ublox C94-M8P-C GNSS Unit,  a 5 volts battery, a bluetooth dongle and a keypad receiver. 
+
+All the aforementioned components are stored in a Pelican waterproof box that has rubber plastic liner, the same color as the color code of the boat the system is used in (either blue or yellow). 
+
+\subsubsection{Raspberry Pi 3}
+
+Raspberry Pi 3 (RPi3) is a small computer that is enclosed in a black plastic case in the default system. All the Pis are equipped with Raspbian Jessie with PIXEL and contain the necessary software to run the program for the match racing system at start up.
+
+The RPi3 is powered by a 5 Volts ANKER battery, via a micro USB cord (male) to USB (male) cord.
+
+\subsubsection{Battery}
+
+The Raspberry Pi is powered by a 5V 2A battery via a micro-USB cable. The battery should remain plugged in when the program is running. The battery level can be read from the power indication LED on the battery body. Before going sailing, please make sure at least three of the power indication LEDs are on(steady blue light). 
+
+\subsubsection{GNSS module} \label{GNSS}
+
+The C94-N8P-C GNSS module is a high precision positioning module manufactured by U-blox. It includes an application board, an active GNSS antenna, an antenna ground plane and a micro-USB cable. The application board is powered via the micro-USB cable to the Raspberry Pi and should remain plugged in when the program is running. The GNSS antenna needs to be placed on the top of the pelican case on its ground plane to reduce electrical interference from the system and reach its ultimate performance. 
+
+After launching the system on a sunny day, the GNSS system will take up to 30 seconds to reach a fixed status. The stationary accuracy of the module is 2 meters. When the module is moving rapidly on water, its accuracy may decrease to within 10 meters, but the program is reliable in warning the sailors of incoming boat based on mathematical prediction of the boat's location.
+
+\subsubsection{Bluetooth Dongle} \label{bluetooth_trans}
+
+The bluetooth dongle is a small black USB insert that works in lieu of the bluetooth chip of the RPi3, with better range and reliability than the in-built bluetooth controller of the Pi. It should remain plugged in any USB port of the RPi3 when the program is running. It has a blue status LED lighting up inside the insert, when it is up and working.
+
+\subsubsection{Keypad Receiver} \label{keypad_receive}
+
+This is either small white (if the box/boat is yellow) or black (if the box/boat is blue) USB insert that acts as a receiver for the keypad and should remain plugged in when the system is working. It does not have any status LEDs for indication that it works. More information about the Keypad Kit is given in Section \ref{keypad_kit}.
+
+\subsection{Keypad Kit} \label{keypad_kit}
+ The keypad kit consists of a Battop number pad, either white (if it is in the yellow box) or black (if it is in the blue box); a receiver that was mentioned in Section \ref{keypad_receive}; and a 3D printed enclosure that can be strapped on to the user's leg.
+ 
+ The keypad kit is the user can interact with the program, which will be detailed later in this document, in Section \ref{ui}.
+ 
+\subsection{Headphone Kit}
+
+The Bluetooth headphone kit includes a bluetooth earpiece, either white (if in yellow box) or black (if in blue box); a receiver that was mentioned in Section \ref{bluetooth_trans}. 
+
+Before turning on the cabin computer, long press the button on the side of the earphone until the LED is flashing red and blue alternatively (Pairing Mode). The LED light will stop flashing after the earphone is connected with the cabin computer. After using, long press the button until the LED turns into steady red for one second. 
+
+The Bluetooth earphone has a battery life of 4-6 hours. The current earphone has no power indication LED and we therefore advise charging the earphone for half an hour every time before going sailing. 
+
+\subsection{Tack Sensor}
+
+Tack sensor is an apparatus that is connected to the system at boot(start up) and transmits necessary tack information to the cabin computer through a bluetooth connection.
+
+It is powered by a 9V battery that can be found inside the tack sensor and can be turned on and off via a toggle switch. The details about the tack sensor can be found in Section \ref{tack_um}.
+
+\pagebreak
+
+\section{Setup} \label{setup}
+
+The cabin computer and all the components in the kit are equipped with all the software and its configuration settings, necessary to run the program, however there are several things the user needs to do to make sure the system runs smoothly and with its full functionality.
+
+\subsection{Putting the Cabin Computer Together}
+
+The cabin computer should come in with all the components attached and connected to their respective places. First, check to see that the Bluetooth Dongle and the Keypad Receiver are connected to two USB ports.
+
+Second, check to see if the GNSS unit is connected to the RPi3 via a third USB port. Next, check to see whether the GNSS module is correctly put together. More information about this module can be found in Section \ref{GNSS}.
+
+Third, plug in the power cable's micro USB end to the power port of the RPi3 - which should be on the longer side of the RPi3, next to the HDMI port. Plug the other end to the battery, when you are sure to bring the system up.
+
+\subsection{Setting Up the Other Components}
+
+Once the tack sensor is attached to the boom, make sure the bluetooth transmitter of the sensor is attached to the sensor, as described in Section \ref{tack_um}. Once the toggle switch is switched on, look for the status indications as described in Section \ref{tack_um}.
+
+Afterwards, attach the keypad to where you feel is comfortable. The most popular options are strapping it to their upper leg, or their life vest. Secure it tightly and make sure no extra straps are dangling from the device that might be dangerous.
+
+Once all the previous steps in the setup are complete and the user is ready to start the program, take the in-ear earpiece and hold down on the power button and wait until it flickers blue and red. Before it reaches this state, it will start blinking in only blue, however don't stop and keep pressing until this red-blue flickering state is achieved.
+
+\subsection{Powering the Pi and Starting the Program}
+
+Finally, connect the power cable to the battery and check to see if the red LED inside the RPi3 is on. This LED indicates that the computer is powered on. Put the components of the system inside the box and make sure the GNSS antenna sits on its metal plate and is placed relatively level on top of the rest of the system, having a clear view of the sky through the top of the box.
+
+Once the battery is powered, the software's startup menu can be heard within 30 seconds.
+
+\pagebreak
+
+\section{User Interface} \label{ui}
+After following the instruction given in Section \ref{setup}, the user will be able to hear instructions from the Bluetooth earphone and navigate the user interface with the keypad.
+
+\subsection{Main Menu}
+When the program begins, the user will enter the Main Menu and be able to navigate to 5 function modes. The modes are mapped to the number keys as indicated below. Detailed description about the functionality of each mode will be given in the following sections.
+
+\begin{enumerate}
+\item Buoy Setup Mode
+\item Customization Mode
+\item Sailing Mode
+\item Instruction Mode
+\item Connectivity Check Mode
+\end{enumerate}
+
+When a button is pressed, the program will first give the name of the mode associated with the key. To confirm entering the mode, hit the same button again. This same rule applies to every sub-mode except for sailing mode.
+
+\subsection{Buoy Setup Mode}
+
+Buoy Setup Mode allows the administrator to set up the buoy location prior to the match. Button 1, 2 or 3 are used to set the location for port, windward or starboard buoy. Button 4, 5 or 6 can give the bearing and distance of port, windward or starboard buoy relative to current location. After making sure every buoy is set up at the correct location, the user can press Enter twice to save the location information. The program will return to the Main Menu.
+
+\subsection{Customization Mode}
+
+Customization Mode allows the sailor to set up system settings for sailing mode and earphone. The settings are mapped to number 1 to 6 as indicated below.
+
+\begin{enumerate}
+\item Change Distance Unit
+\item Change Direction Unit
+\item Change Delay between each Update
+\item Change Volume
+\item Change Rate of Speech
+\item Change Gender of Speaker
+\end{enumerate}
+
+When changing the unit, the user can use the number indicated by the program to select the desired unit. When changing the volume or rate of speech, the user can use 8 to increase and 2 to decrease. After the setup is finished, press Enter twice to save the settings. The program will return to the Customization Menu.
+
+\subsection{Sailing Mode}
+
+Sailing Mode allows the sailor to request information about the buoys or the other boat during the match. The information is mapped to number 0 to 8 as indicated below.
+
+\begin{enumerate}
+\setcounter{enumi}{-1}
+\item All the information about the other boat
+\item Bearing of the other boat
+\item Distance to the other boat
+\item Tack of the other boat
+\item Bearing and Distance to Port Buoy
+\item Bearing and Distance to Windward Buoy
+\item Bearing and Distance to Starboard Buoy
+\item Enable Auto-Update
+\item Switch to the next buoy in Auto-Update
+\end{enumerate}
+
+While sailing , the Auto-Update function (Key 7) gives the bearing and distance to a buoy every 15 seconds(default delay time). This way the sailor don't need to consistently requesting information about the buoy. After passing one buoy, the sailor can press Key 8 to switch to the next buoy in Auto Update.
+
+When the two boats come too close, the program will give a warning every 10 seconds until the boats are away from each other again. The warning contains the bearing, distance and tack of the other boat. 
+
+In sailing mode, the sailor will not hear instructions about the buttons. After the user press a button, the program will output the related information immediately. The sailor can refer to the Instruction Mode for detailed description on the sailing mode.
+
+\subsection{Instruction Mode}
+
+The Instruction Mode gives user instructions on Sailing Mode. When the user press a button in Instruction Mode, the program will give description of its function in the Sailing Mode.
+
+\subsection{Connectivity Check Mode}
+
+The Connectivity Check Mode tells the user if all the on-board connections are online. This includes GPS, Wi-fi connection between boats and bluetooth connection to the tack sensor. We recommend going into this mode every time after reboot to make sure the system is running appropriately. 
+
+\end{document}
